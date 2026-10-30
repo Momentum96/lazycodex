@@ -4,6 +4,42 @@
 
 > 대회 규정상 사용하는 공개 저장소는 **2차 예선 결과 통지 전까지 공개 상태로 유지**해야 합니다. 이 저장소를 삭제하거나 비공개로 돌리지 마세요.
 
+## AI 에이전트용 세팅 순서
+
+이 README를 읽고 환경을 세팅하는 코딩 에이전트(Codex 등)는 아래 순서를 그대로 따르세요. 각 단계는 다시 실행해도 안전합니다. **재시작이 필요한 지점에서는 멈추고 사용자에게 재시작을 요청하세요.** 에이전트는 자기 세션을 재시작할 수 없습니다.
+
+1. **플러그인 설치** (셸에서 실행)
+
+   ```bash
+   codex plugin marketplace add Momentum96/lazycodex
+   codex plugin add omo@sisyphuslabs
+   codex plugin list   # omo@sisyphuslabs 가 installed, enabled 인지 확인
+   ```
+
+   `npx lazycodex-ai install`은 절대 실행하지 마세요. upstream이 설치됩니다.
+
+2. **[사용자] 재시작 1**: Codex를 다시 실행하고, 시작 화면의 omo 훅 승인 요청을 승인합니다. `LazyCodex bootstrap running in background` 안내가 보이면 부트스트랩이 끝날 때까지 잠시 기다립니다.
+
+3. **[사용자] 재시작 2**: 부트스트랩이 끝나면 Codex를 한 번 더 재시작합니다. 확인 방법: `~/.codex/config.toml` 맨 위에 `model = "gpt-6.1-sol"`이 있고, `~/.codex/agents/`에 `explorer.toml` 등 역할 파일이 생겼으면 완료입니다.
+
+4. **권한·기능 설정**: 아래 [autonomous 설정 (수동)](#autonomous-설정-수동) 섹션대로 `~/.codex/config.toml`을 편집합니다.
+   - 루트 키(`approval_policy`, `sandbox_mode`)는 반드시 첫 번째 `[섹션]`보다 위에 둡니다.
+   - `[features]` 섹션이 이미 있으면 새로 만들지 말고 그 안에 키를 추가합니다. 섹션이나 키가 중복되면 Codex가 설정을 읽지 못합니다.
+   - 그 밖의 키(모델, `[agents.*]`, `[hooks.state.*]`, `[marketplaces.*]`, `[plugins.*]`)는 건드리지 않습니다.
+   - 편집한 뒤 `codex features list`를 실행해 오류가 없는지, `goals`·`multi_agent`·`unified_exec`가 `true`인지 확인합니다.
+
+5. **[사용자] 재시작 3**: 설정을 반영하려고 Codex를 다시 실행합니다.
+
+6. **최종 확인**: `/status`에서 모델이 `gpt-6.1-sol`인지, approval이 `never`, sandbox가 `danger-full-access`인지 확인합니다. 입력창에 `# LazyCodex - SK하이닉스 AI 해커톤 2026 대회용 포크
+
+[code-yeongyu/lazycodex](https://github.com/code-yeongyu/lazycodex)(OmO의 Codex 배포판)를 SK하이닉스 AI 해커톤 2026 2차 예선 규정에 맞게 줄인 포크입니다. Codex 플러그인 `omo` 하나만 남겼고, 대회에서 문제가 될 수 있는 기능을 빼거나 고쳤습니다.
+
+> 대회 규정상 사용하는 공개 저장소는 **2차 예선 결과 통지 전까지 공개 상태로 유지**해야 합니다. 이 저장소를 삭제하거나 비공개로 돌리지 마세요.
+
+를 입력해 스킬 목록(`ultrawork`, `ulw-plan` 등)이 보이면 세팅이 끝난 것입니다.
+
+설정 파일을 고쳤는데 `/status`에 반영되지 않으면, 플랫폼이 관리 설정으로 값을 강제하고 있을 수 있습니다. 이 경우 우회하려 하지 말고 그대로 두세요.
+
 ## upstream 대비 변경 사항
 
 | 구분 | 변경 |
