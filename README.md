@@ -24,7 +24,7 @@
 upstream의 `npx lazycodex-ai install`은 **사용하지 마세요.** npm에 올라간 upstream 패키지가 설치되어 이 포크의 수정 사항(모델, 텔레메트리·자동 업데이트 제거 등)이 적용되지 않습니다. 반드시 아래처럼 마켓플레이스로 설치합니다.
 
 ```bash
-codex plugin marketplace add Momentum96/lazycodex --ref contest-2026
+codex plugin marketplace add Momentum96/lazycodex
 codex plugin add omo@sisyphuslabs
 ```
 
