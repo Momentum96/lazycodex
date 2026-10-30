@@ -10002,7 +10002,7 @@ var LATEST_MODEL_BY_FAMILY = {
   claudeSonnet: "claude-sonnet-5-5",
   claudeHaiku: "claude-haiku-5-5",
   claudeFable: "claude-fable-5-1",
-  gptAstra: "gpt-6-astra",
+  gptAstra: "gpt-6.1-sol",
   gptSol: "gpt-6.1-sol",
   gptSolFast: "gpt-6.1-sol-fast",
   gptLunaFast: "gpt-6-luna-fast",
@@ -11758,11 +11758,17 @@ import { join as join19 } from "node:path";
 var FALLBACK_CODEX_MODEL_CATALOG = {
   current: {
     model: LATEST_MODEL_BY_FAMILY.gptAstra,
-    modelContextWindow: 600000,
+    modelContextWindow: 500000,
     modelReasoningEffort: "high",
     planModeReasoningEffort: "xhigh"
   },
   managedProfiles: [
+    {
+      model: "gpt-6-astra",
+      modelContextWindow: 600000,
+      modelReasoningEffort: "high",
+      planModeReasoningEffort: "xhigh"
+    },
     {
       model: "gpt-5.5",
       modelContextWindow: 400000,

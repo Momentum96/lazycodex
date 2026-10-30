@@ -3,6 +3,8 @@ name: frontend
 description: "Builds, styles, and polishes anything drawn with HTML, CSS, or SVG: web UI, pages, components, HTML reports rendered to PDF or print, figures, PNG/SVG diagrams, slides, and images for Notion or Slack. Use for any styling, layout, animation, or visual-quality task, or when asked to make something look or feel a certain way."
 ---
 
+> **Contest fork note (SK hynix AI Hackathon 2026):** the `browser`, `visual-qa` and `ulw-research` skills are removed in this fork, and Computer Use is forbidden by the contest rules. Wherever this skill asks for `/visual-qa`, omowright or another programmatic browser, use `curl -i` against the server bound to 0.0.0.0, the project's own tests, and a manual look in the platform's built-in Browser preview instead. Do not automate a browser unless the organizers have confirmed it is allowed.
+
 # Frontend
 
 This file is a router over `references/`; the rules live there. The flow is ground -> brief -> build -> subtract -> verify. The bar is restraint with a visible hierarchy: one primary action, the important thing first, nothing on the screen without a job. A quiet, correct screen that holds its hierarchy at 390 and 1440 in both themes is a finish. Atmosphere, motion, and award-grade surface work are opt-in: build them when the brief asks (a named brand, "premium", "make it stunning", a marketing page), never by default for an internal tool, dashboard, admin screen, report, or figure.
@@ -17,7 +19,7 @@ Before the first edit, name the references the request routes to and one reason 
 | A new screen or flow in an existing project | ALSO `references/design/README.md` Phase 0 (the `DESIGN.md` gate and its branches) and the Layer A skill in use. |
 | A new screen or flow, a redesign ("this looks bad", "make it better"), or design-system creation or rework | ALSO `references/design/grounding.md` (step 0 below). |
 | Greenfield with no concrete reference | `references/design/README.md` in full: the gate, the greenfield research lanes (`_INDEX.md` shortlist, `lazyweb.md`, `stylegallery.md`, imagen drafts), and the style routing. One Layer A + one Layer B, read in full. |
-| A concrete visual reference: screenshot, mockup, Figma export, Stitch or imagen output | `references/design/image-to-code-skill.md`; a live site or URL to clone: `references/design/clone-from-url.md`. The reference is the contract and `/visual-qa` runs in reference-fidelity mode. |
+| A concrete visual reference: screenshot, mockup, Figma export, Stitch or imagen output | `references/design/image-to-code-skill.md`. The reference is the contract and `/visual-qa` runs in reference-fidelity mode. |
 | Any layout or structure change: a new or reshaped region, shell, panel, split, list or grid, sticky bar, or scroll container; "what goes where"; "this layout breaks at X" | `references/design/layout-skill.md` for the mechanics, then `references/design/stylegallery.md` for the pattern contract. Write the `Layout:` line (Brief, below) before the code; `/visual-qa` A12 checks the build against it. |
 | Paged output: a PDF report, print stylesheet, headless-Chrome print pipeline, a deck printed to paper, "why is this page half empty" | `references/design/print-paged-media.md`: page box, fragmentation properties, the atomic-block set, the keep-together side effect that strands a block. |
 | Interaction or motion: micro-interactions, transitions, gestures, hover/press/state feedback | `references/design/interaction-skill.md`. The beui.dev catalog is the reference: read the nearest pattern's real source through its curl recipe, adapt the mechanism to `DESIGN.md` motion tokens. |
@@ -138,7 +140,7 @@ python3 -B $SKILL_DIR/references/ui-ux-db/scripts/search.py "<query>" --stack <s
 | Situation | Load |
 |---|---|
 | Brand/style not among the 70 in `references/design/`, or the user says "Open Design" | `open-design` skill: the local nexu-io/open-design library (137+ design skills, 150+ design systems) |
-| Driving a browser for captures | `visual-qa` skill: omowright from js eval (owned engine for renders, attached engine for signed-in pages) |
+| Driving a browser for captures | Not available in this contest fork: use the platform's built-in Browser preview manually |
 | Pure TypeScript/logic work with zero visual surface | `programming` skill alone; this skill adds nothing there |
 
 ## Activation

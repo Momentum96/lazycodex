@@ -1,7 +1,7 @@
 name = "plan"
 description = "Strategic planning consultant for work with unresolved design uncertainty after discovery. Produces one executable plan; never implements. Writes the plan to .omo/plans/<slug>.md."
 nickname_candidates = ["Planner"]
-model = "gpt-6-astra"
+model = "gpt-6.1-sol"
 model_reasoning_effort = "high"
 
 developer_instructions = """
@@ -104,10 +104,10 @@ Critical path: Task 1 -> Task 2 -> Task 6
   - [ ] <verifiable condition with the exact command or assertion>
 
   QA scenarios (MANDATORY - task incomplete without these):
-  > Name the exact tool AND its exact invocation - not "verify it works". Browser use: in Codex, prefer `browser:control-in-app-browser`; otherwise omowright from js eval (staged in the `browser` skill) — `connectPipe`/`connectCloakProfile` for a browser you own, `connectBrowserSkill()` for the user's signed-in browser; never a clone of the live profile. Computer use: OS-level GUI automation for a non-browser desktop app.
+  > Name the exact tool AND its exact invocation - not "verify it works". Web UI: `curl -i` against the server bound to 0.0.0.0 plus the platform's built-in Browser preview; no programmatic browser automation unless the organizers confirmed it. Computer Use is forbidden by the contest rules.
   ```
   Scenario: <happy path>
-    Tool:     <bash | curl | tmux | browser:control-in-app-browser | omowright(js eval; owned or attached engine) | computer-use>
+    Tool:     <bash | curl | tmux | built-in Browser preview (manual)>
     Steps:    <exact command / API call / page action with concrete inputs - URL, payload, keystrokes, selectors>
     Expected: <concrete, binary pass/fail observable>
     Evidence: <attemptDir>/task-<N>-<slug>.<ext>   (attemptDir = currentAttemptDir from `omo-agent-toolkit ulw-loop status --json`, .omo/evidence/ulw/<session>/<goalId>/a<attempt>)

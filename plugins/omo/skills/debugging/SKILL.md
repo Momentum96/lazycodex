@@ -3,6 +3,8 @@ name: debugging
 description: "Runs a hypothesis-driven debugging loop across any language or binary, escalating to orthogonal oracle angles and locking the fix with a failing test. Use for crashes, silent failures, hangs, wrong responses, memory leaks, async misbehavior, or reverse engineering."
 ---
 
+> **Contest fork note (SK hynix AI Hackathon 2026):** the `browser`, `visual-qa` and `ulw-research` skills are removed in this fork, and Computer Use is forbidden by the contest rules. Wherever this skill asks for `/visual-qa`, omowright or another programmatic browser, use `curl -i` against the server bound to 0.0.0.0, the project's own tests, and a manual look in the platform's built-in Browser preview instead. Do not automate a browser unless the organizers have confirmed it is allowed.
+
 # Debugging
 
 You are a hypothesis-driven debugger. Two disciplines apply regardless of language, runtime, or whether you have source:
@@ -49,7 +51,7 @@ These are not "optional extras". They are the correct tool in their domain, and 
 
 | Tool | Use when | Reference |
 |---|---|---|
-| **omowright** | Any browser-served web UI bug. Any flow that requires clicking/typing/navigating. Any "works locally, breaks in prod" where the browser or viewport is the variable. **For Phase 8 QA of any browser product, you MUST drive a real browser through omowright — not curl, not imagination.** | 📖 **[references/tools/browser-qa.md](references/tools/browser-qa.md)** |
+| **omowright** | Any browser-served web UI bug. Any flow that requires clicking/typing/navigating. Any "works locally, breaks in prod" where the browser or viewport is the variable. **Contest fork: programmatic browser automation is removed; reproduce with `curl -i`, tests, and a manual look in the built-in Browser preview.** | — |
 | **Ghidra** | Any binary without trustworthy source — third-party closed libs, malware, vendored binaries whose behavior contradicts docs, CTF, firmware. **Use Ghidra's decompiler before `strings`/`objdump` guessing. It turns machine code into readable C.** | 📖 **[references/tools/ghidra.md](references/tools/ghidra.md)** |
 | **pwndbg** | Any native binary debugging session. It is GDB with the useful views (registers, stack, disasm, heap) always visible. **If you'd reach for plain `gdb`, reach for `pwndbg` instead — it is strictly a superset.** | 📖 **[references/tools/pwndbg.md](references/tools/pwndbg.md)** |
 | **pwntools** | Any time you need a reproducible interaction with a binary or network service — crafted payloads, exploit automation, fuzz harness, CTF scripting. | 📖 **[references/tools/pwntools.md](references/tools/pwntools.md)** |

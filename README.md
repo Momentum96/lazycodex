@@ -1,279 +1,67 @@
-<div align="center">
-  <img src=".github/assets/omo-icon-light.svg" alt="LazyCodex" width="280">
+# LazyCodex - SK하이닉스 AI 해커톤 2026 대회용 포크
 
-  <h1>LazyCodex</h1>
+[code-yeongyu/lazycodex](https://github.com/code-yeongyu/lazycodex)(OmO의 Codex 배포판)를 SK하이닉스 AI 해커톤 2026 2차 예선 규정에 맞게 줄인 포크입니다. Codex 플러그인 `omo` 하나만 남겼고, 대회에서 문제가 될 수 있는 기능을 빼거나 고쳤습니다.
 
-  <p><strong>The one and only agent harness for complex codebases.</strong><br />
-  Project memory, planning, execution, and verified completion inside Codex.</p>
+> 대회 규정상 사용하는 공개 저장소는 **2차 예선 결과 통지 전까지 공개 상태로 유지**해야 합니다. 이 저장소를 삭제하거나 비공개로 돌리지 마세요.
 
-  <p>
-    <a href="https://github.com/code-yeongyu/lazycodex">
-      <img alt="Stars" src="https://img.shields.io/github/stars/code-yeongyu/lazycodex?style=for-the-badge&color=c69ff5&logoColor=D9E0EE&labelColor=302D41" />
-    </a>
-  </p>
+## upstream 대비 변경 사항
 
-  <p>
-    <a href="#-what-is-this">What is this?</a>
-    ·
-    <a href="https://github.com/code-yeongyu/oh-my-openagent">OmO</a>
-    ·
-    <a href="https://lazycodex.ai">lazycodex.ai</a>
-  </p>
+| 구분 | 변경 |
+|---|---|
+| 모델 | 기본 모델과 번들된 에이전트 역할 12개를 모두 `gpt-6.1-sol`(6.1 Sol)로 고정했습니다. upstream 기본값은 대회에서 제한된 `gpt-6-astra`입니다. 기존 Astra 설정은 관리 프로필로 인식되어 Sol로 교체됩니다. |
+| 텔레메트리 | PostHog로 세션 정보를 보내는 `telemetry` 컴포넌트와 훅을 제거했습니다. |
+| 자동 업데이트 | 세션 시작 때 `npx lazycodex-ai@latest install`을 실행하던 자동 업데이트 훅과 스크립트를 제거했습니다. Codex 버전 업데이트 금지 공지와 부딪히고, 포크 수정 사항을 upstream으로 덮어쓰기 때문입니다. |
+| 브라우저 자동화 | `browser`(omowright), `ultimate-browsing`(WAF 우회·스텔스·쿠키 추출), `visual-qa`, `ulw-research` 스킬을 제거했습니다. 남은 스킬과 지시문의 검증 채널도 "curl + 플랫폼 내장 Browser 미리보기 수동 확인"으로 바꿨습니다. |
+| Computer Use | 스킬과 지시문에 있던 computer-use(OS 수준 GUI 자동화) 사용 지시를 "대회 규정상 금지"로 바꿨습니다. |
+| 외부 전송 | GitHub 이슈·PR을 만드는 `lcx-report-bug`, `lcx-contribute-bug-fix`를 제거했습니다. |
+| 기타 제거 | `lcx-doctor`(Astra 기준 점검과 Codex 업그레이드 안내), `teammode`, `coding-agent-sessions` 스킬, 무제한 goal 예산 강제 훅을 제거했습니다. |
+| 저장소 정리 | 랜딩 사이트(`packages/web`), 스크린샷·evidence(`.omo`), GitHub workflow, npm 설치기(`bin`, `package.json`), `src` 서브모듈을 제거했습니다. 플러그인은 번들된 `dist`로 동작하므로 서브모듈이 필요 없습니다. |
 
-  <br />
-</div>
+남아 있는 것: `ast-grep`, `comment-checker`, `debugging`, `frontend`, `git-master`, `init-deep`, `lsp`, `lsp-setup`, `programming`, `refactor`, `remove-ai-slops`, `review-work`, `rules`, `ultrawork`, `ulw-execute`, `ulw-loop`, `ulw-plan`, `data-scientist` 스킬과 rules·LSP·comment-checker·git-bash·ultrawork·ulw-loop 훅, 원격 MCP `context7`·`grep_app`, 로컬 MCP `git_bash`·`lsp`.
 
-<hr />
+## 설치
 
-> [!NOTE]
-> **[OmO] 60K Stars: the terrifying token burner has arrived in LazyCodex.**
->
-> Sisyphus Labs' OmO is the quality-obsessed agent harness whose public lore says it loved Anthropic models hard enough to get third-party clients blocked. Now that same OmO quality bar is available for Codex through LazyCodex.
->
-> If you wanted OmO but did not want the setup ceremony, start here:
->
-> ```bash
-> npx lazycodex-ai install
-> ```
->
-> Context: [OmO 60K Stars on X](https://x.com/justsisyphus/status/2060210365338939452?s=20)
-
-## 🚀 Install
-
-One line. No global install, no `npm i -g`. Always use `npx`:
+upstream의 `npx lazycodex-ai install`은 **사용하지 마세요.** npm에 올라간 upstream 패키지가 설치되어 이 포크의 수정 사항(모델, 텔레메트리·자동 업데이트 제거 등)이 적용되지 않습니다. 반드시 아래처럼 마켓플레이스로 설치합니다.
 
 ```bash
-npx lazycodex-ai install
-```
-
-This is shorthand for `npx --yes --package oh-my-openagent omo install --platform=codex`. For a fully autonomous, no-TUI setup:
-
-```bash
-npx lazycodex-ai install --no-tui --codex-autonomous
-```
-
-### Install from the Codex marketplace (experimental)
-
-The npx installer above stays the primary path. As an additive, experimental
-alternative you can install from inside Codex itself: type `/plugins`, open the
-**Add Marketplace** tab ("Add a marketplace from a Git repo or local root."),
-and enter `https://github.com/code-yeongyu/lazycodex`, then install `omo` from
-the `sisyphuslabs` marketplace. Or from the CLI:
-
-```bash
-codex plugin marketplace add https://github.com/code-yeongyu/lazycodex
+codex plugin marketplace add Momentum96/lazycodex --ref contest-2026
 codex plugin add omo@sisyphuslabs
 ```
 
-On the next launch, approve the omo hooks in Codex's startup review — hooks
-never run before approval. The first approved session prints
-`LazyCodex bootstrap running in background — restart the session when it completes`
-while a background worker finishes the setup (config blocks, agent roles, bin
-links, a pinned `sg` binary for the `ast_grep` MCP); restart when it is done.
-The marketplace path never touches Codex permission settings — autonomous mode
-remains the explicit `npx lazycodex-ai install --no-tui --codex-autonomous`
-choice.
+1. 설치 후 Codex를 실행하면 시작 화면에서 omo 훅 승인을 요청합니다. 승인하세요. 승인 전에는 훅이 실행되지 않습니다.
+2. 첫 세션에서 `LazyCodex bootstrap running in background — restart the session when it completes`가 표시되면, 백그라운드 부트스트랩이 에이전트 역할 등록, bin 링크, `ast_grep` MCP용 `sg` 바이너리 다운로드(GitHub)를 마칠 때까지 기다린 뒤 세션을 재시작하세요.
+3. 재시작 후 `/status`에서 모델이 `gpt-6.1-sol`인지 확인하고, 아니면 `/model`로 선택하세요. 입력창에 `$`를 치면 설치된 스킬 목록이 보입니다.
 
-Upgrade with `codex plugin marketplace upgrade sisyphuslabs`. The next startup
-review shows the hooks as **Modified** — expected after every upgrade —
-re-approve them and the following session re-runs bootstrap on the new version.
-If anything looks pending or degraded, `npx lazycodex-ai doctor` explains what
-and why. Full details: [lazycodex.ai/docs](https://lazycodex.ai/docs).
+부트스트랩은 권한 설정(approval/sandbox/network)을 건드리지 않습니다.
 
-### Verify it worked
+## autonomous 설정 (수동)
 
-```bash
-npx lazycodex-ai doctor
-```
+upstream의 `--codex-autonomous`는 npm 설치기 전용이라 이 포크에서는 `~/.codex/config.toml`을 직접 고칩니다. upstream이 하는 변경 중 경고 숨김(`[notice]`)은 제외했습니다.
 
-`doctor` prints the installation health report: plugin cache, hooks, MCP
-servers, agents, and config state. Inside Codex, type `$` in the composer to
-browse every installed skill — `init-deep`, `ulw-loop`, `ulw-plan`,
-`start-work`, and the rest — and hooks announce themselves with
-`LazyCodex(<version>): ...` status messages during a session.
+1. 파일 맨 위, 첫 번째 `[섹션]`보다 앞에 아래 두 줄을 넣거나 기존 값을 바꿉니다.
 
-### Uninstall
+   ```toml
+   approval_policy = "never"
+   sandbox_mode = "danger-full-access"
+   ```
 
-```bash
-npx lazycodex-ai uninstall
-```
+2. 같은 루트 영역에 `network_access = ...` 줄이 있으면 삭제합니다.
+3. `[features]` 섹션에 아래 세 기능을 켭니다. 섹션이 없으면 새로 만듭니다.
 
-Removes the installed plugin cache, bin links, agent roles, and the managed
-sections of `~/.codex/config.toml`.
+   ```toml
+   [features]
+   multi_agent = true
+   unified_exec = true
+   goals = true
+   ```
 
-## ⚡ Commands
+## 대회 중 유의 사항
 
-LazyCodex installs these as OmO commands for Codex. Invoke them with the
-`$command` syntax shown by the installer.
+- Codex 버전 업데이트는 금지입니다. 업데이트 권유가 떠도 무시하세요.
+- 사용 모델은 공지된 권장 모델(6.1 Sol, 5.6 Terra, 6.0 Luna) 안에서만 고르세요.
+- Computer Use와 감독·보안 기능 우회는 금지입니다. 웹 결과물은 서버를 `0.0.0.0`에 바인딩하고 플랫폼 내장 Browser 미리보기로 직접 확인하세요.
+- 문제·파일·결과물을 외부로 보내지 마세요. Git Push는 불가합니다.
 
-| Command | Type this | What it does |
-| --- | --- | --- |
-| `$ulw-loop` | `$ulw-loop "task" [--completion-promise=TEXT] [--strategy=reset\|continue]` | Self-referential loop that runs until Oracle-verified completion. Caps at 500 iterations in ultrawork mode, 100 in normal mode. |
-| `$ulw-plan` | `$ulw-plan "what to build"` | Prometheus strategic planner. Writes a plan to `plans/<slug>.md`. Never writes product code. |
-| `$start-work` | `$start-work [plan-name] [--worktree <path>]` | Executes a plan until every checkbox is done. Prints **ORCHESTRATION COMPLETE**. |
+## 라이선스
 
-Full documentation lives at [lazycodex.ai/docs](https://lazycodex.ai/docs).
-
-## Use the built-in workflows
-
-LazyCodex should be judged by the features it actually installs. It is the
-Codex distribution for OmO's agent harness: project memory, planning,
-execution, verified completion, skills, hooks, model routing, and diagnostics.
-
-### 1. `$init-deep` creates project memory
-
-`$init-deep` generates hierarchical `AGENTS.md` context. It scores complex
-directories, writes local guidance near the code that needs it, and gives future
-agents landmarks before they edit. Type `$init-deep` in the Codex composer —
-the `$` prefix is how every installed skill is invoked.
-
-Use it when the repository is too large to explain from memory. Run it again
-when the shape of the codebase changes.
-
-### 2. The three command pillars stay up front
-
-Use `$ulw-plan` when the work needs decisions before implementation. It writes a
-plan to `plans/<slug>.md` and does not touch product code.
-
-Use `$start-work` when a plan is ready. It executes the checklist with durable
-Boulder progress and stops only when the plan is complete.
-
-Use `$ulw-loop` when the task should keep moving until the result is verified by
-evidence instead of a hopeful status update.
-
-### 3. Skills cover specialized work
-
-The command layer stays simple. The skill layer adds specialist judgment for the
-actual work:
-
-| Feature | Use it for |
-| --- | --- |
-| `$init-deep` | Hierarchical project memory through `AGENTS.md` |
-| `$ulw-plan` | Decision-complete planning before code changes |
-| `$start-work` | Durable plan execution with Boulder progress |
-| `$ulw-loop` | Verified completion for open-ended tasks |
-| `review-work` | Multi-angle post-implementation review |
-| `remove-ai-slops` | Behavior-preserving cleanup of AI-looking code |
-| `frontend-ui-ux` | Polished UI surfaces |
-| `programming` | Strict TypeScript, Rust, Python, or Go discipline |
-| `LSP` | Diagnostics, definitions, references, symbols, and renames |
-| `AST-grep` | Structural search and rewrite across code |
-| `rules` | Project instructions from AGENTS, rules, and instruction files |
-| `comment-checker` | Feedback after edit-like operations |
-
-### 4. Sub-agent roles ride Codex's native multi-agent tools
-
-LazyCodex installs selectable agent roles into `~/.codex/agents/`: `explorer`,
-`librarian`, `plan`, `momus`, `metis`, and `codex-ultrawork-reviewer`. Pick one
-by passing `agent_type` to Codex's `spawn_agent` tool — the child agent runs
-with that role's model and instructions:
-
-```jsonc
-spawn_agent({"message": "TASK: map the auth flow end to end.", "agent_type": "explorer"})
-```
-
-The installer exposes `agent_type` on `multi_agent_v2` sessions (Codex hides it
-by default). If your Codex build's spawn tool has no `agent_type` parameter,
-describe the role inside `message` instead — the skills are written to fall
-back to that form automatically.
-
-Start at [https://lazycodex.ai](https://lazycodex.ai).
-
-<hr />
-
-## 💤 What is this?
-
-**LazyCodex** packages [OmO (oh-my-openagent)](https://github.com/code-yeongyu/oh-my-openagent) as the Codex agent harness for complex codebases.
-
-Think [LazyVim](https://github.com/LazyVim/LazyVim) for [lazy.nvim](https://github.com/folke/lazy.nvim), but for Codex.
-
-OmO is the agent harness: discipline agents, parallel orchestration, multi-model routing, skills, hooks, and verified completion. LazyCodex packages that harness for Codex.
-
-> _"LazyVim made Neovim usable for the rest of us. LazyCodex does the same for Codex."_
-
-Credit: The LazyCodex name idea is inspired by [LazyVim](https://github.com/LazyVim/LazyVim). The Ultragoal and UltraQA ideas are inspired by [oh-my-codex](https://github.com/Yeachan-Heo/oh-my-codex), reimplemented from concept for this Codex setup.
-
-## 🧩 What you get
-
-| Feature | Description |
-| --- | --- |
-| 🤖 **Discipline Agents** | Sisyphus orchestrates Hephaestus, Oracle, Librarian. A full AI dev team |
-| 🔀 **Parallel Execution** | Multiple agents working simultaneously on subtasks |
-| 🎯 **Multi-Model Routing** | Automatic model selection per task category |
-| 🛠️ **Skills System** | Extensible skill library for specialized tasks |
-| 📋 **Hooks & Lifecycle** | Pre/post hooks for every agent action |
-| 🔧 **Zero Config** | Sensible defaults, override when you want |
-
-## 🧠 Why different GPT models appear
-
-Do not be surprised if an OmO/LazyCodex run shows models like `gpt-5.2`
-with `xhigh`, `gpt-5.4-mini`, `gpt-5.3-codex`, or newer equivalents like
-`gpt-5.5` with `xhigh`. That is intentional.
-
-OmO does not blindly spend your best model on every subtask. Its source
-defines task categories and fallback chains so the agent can pick the most
-appropriate model for the job: `quick` routes to `gpt-5.4-mini` for small
-edits, `ultrabrain` uses a high-reasoning GPT model for hard logic, and
-agentic coding paths can use Codex-tuned GPT models when available. See
-[`openai-categories.ts`](src/src/tools/delegate-task/openai-categories.ts)
-and [`model-requirements.ts`](src/packages/model-core/src/model-requirements.ts).
-
-The point is quota discipline: use the strongest model when the task needs
-deep reasoning, use a cheaper/faster model when that is enough, and keep
-parallel agent work efficient instead of burning premium quota on routine
-steps. This is benchmark-driven routing, not random model churn:
-
-- [GPT-5.2](https://openai.com/index/introducing-gpt-5-2/) is documented by
-  OpenAI as stronger at code review, bug finding, and complex tool use; the
-  announcement notes that its maximum API reasoning effort uses `xhigh`.
-- [GPT-5.3-Codex](https://developers.openai.com/api/docs/models/gpt-5.3-codex)
-  is OpenAI's Codex-tuned model for agentic software engineering, with public
-  coding-agent benchmarks such as SWE-Bench Pro, Terminal-Bench 2.0, and
-  OSWorld Verified reported in the
-  [GPT-5.3-Codex announcement](https://openai.com/index/introducing-gpt-5-3-codex).
-- [GPT-5.4 mini](https://openai.com/index/introducing-gpt-5-4-mini-and-nano/)
-  is positioned for efficient everyday coding, computer use, and subagents;
-  that is why lightweight OmO tasks can land there instead of spending a
-  frontier reasoning model.
-
-Reference links:
-
-- [OpenAI GPT-5.2 announcement](https://openai.com/index/introducing-gpt-5-2/)
-- [OpenAI GPT-5.2 model docs](https://platform.openai.com/docs/models/gpt-5.2/)
-- [OpenAI GPT-5.3-Codex model docs](https://developers.openai.com/api/docs/models/gpt-5.3-codex)
-- [OpenAI GPT-5.4 mini and nano announcement](https://openai.com/index/introducing-gpt-5-4-mini-and-nano/)
-- [OpenAI latest model guide](https://platform.openai.com/docs/guides/latest-model)
-
-## 🏗️ Architecture
-
-LazyCodex is a thin distribution layer. The core engine is [oh-my-openagent (OmO)](https://github.com/code-yeongyu/oh-my-openagent), included as a submodule under `src/`.
-
-```
-lazycodex/
-├── src/                     → oh-my-openagent (submodule)
-├── packages/
-│   └── web/                 → Next.js 15 + Tailwind v4 + opennextjs-cloudflare
-│                              (deployed to lazycodex.ai via Cloudflare Workers)
-├── .github/workflows/       → web-ci.yml + web-deploy.yml
-├── README.md
-└── ...
-```
-
-LazyCodex is part of the [omo.dev](https://omo.dev) project. **omo in Codex**, packaged for the lazy.
-
-## 👷 Maintainer
-
-LazyCodex is maintained by **Jobdori**, the AI assistant that builds and ships [OmO](https://github.com/code-yeongyu/oh-my-openagent) in real-time.
-
-<div align="center">
-
-[![Sisyphus Labs](.github/assets/sisyphuslabs.png)](https://sisyphuslabs.ai)
-
-> **Meet your own Jobdori, Dori.**
-> **Learn more at [sisyphuslabs.ai](https://sisyphuslabs.ai).**
-
-</div>
-
-## 📄 License
-
-MIT
+MIT. 원저작권은 upstream [code-yeongyu/lazycodex](https://github.com/code-yeongyu/lazycodex)에 있으며 `LICENSE`를 그대로 유지합니다.

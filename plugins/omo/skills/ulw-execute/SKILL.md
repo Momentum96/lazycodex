@@ -171,8 +171,7 @@ Each sub-task message must include:
 5. One Manual-QA channel, named with the exact tool and exact invocation (the literal `curl`, `send-keys`, `page.click` / `session.click`, payload, selectors, and the binary observable that decides PASS/FAIL), not "verify it works". A LIGHT checkbox needs one real-surface proof of its deliverable, and auxiliary surfaces (CLI stdout, DB state diff, parsed config dump) are first-class when the surface is CLI- or data-shaped:
    - HTTP call: `curl -i` against the live endpoint.
    - Terminal / TUI: drive a real pty; `tmux send-keys` is fine for a boot/behavior smoke, but color/layout/CJK evidence goes through the xterm.js web terminal below, NEVER `tmux capture-pane`.
-   - Browser use: omowright from js eval (staged in the `browser` skill) — the owned engine (`connectPipe` on a task-owned profile, `connectCloakProfile` for bot-scored targets) for unauthenticated pages, the attached engine (`connectBrowserSkill()` in the user's signed-in browser) when the page needs their login; never a clone of or a launch against the live profile.
-   - Computer use: OS-level GUI automation against the running desktop app when the surface is not a page.
+   - Web UI: `curl -i` against the server bound to 0.0.0.0, plus a manual look in the platform's built-in Browser preview. No programmatic browser automation unless the organizers confirmed it; Computer Use is forbidden by the contest rules.
    - TUI visual evidence: when a TUI claim needs visual QA or PR proof, run `bun script/qa/web-terminal-visual-qa.mjs --command "<cmd>" --input "{Enter}" --evidence-dir <dir>` (real pty rendered through xterm.js in Chrome) and attach `terminal.png` plus `metadata.json`.
 6. The adversarial classes that apply to this sub-task (from the 9 ultraqa classes) and how each is probed.
 7. Required artifact path and cleanup receipt.

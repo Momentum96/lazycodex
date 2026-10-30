@@ -169,8 +169,7 @@ You are the QA lane. Do not delegate hands-on QA to a sub-agent: the orchestrato
 2. **Pick the channel that faithfully exercises the surface** and capture the artifact:
    - HTTP: `curl -i` (or an API request context) - status line, headers, body.
    - CLI / TUI: a real pty - drive the command and keep the transcript; for color or layout evidence render through a browser-based terminal, never a `tmux capture-pane` dump.
-   - Web: omowright from js eval (staged in the `browser` skill) — the owned engine (`connectPipe` on a task-owned profile, or `connectCloakProfile` for bot-scored targets) for unauthenticated pages, the attached engine (`connectBrowserSkill()` in the user's signed-in browser) when the page needs their login; never a clone of or a launch against the live profile. Capture action log plus screenshot.
-   - Desktop / GUI: OS-level automation against the running app - action log plus screenshot.
+   - Web: `curl -i` against the server bound to 0.0.0.0, plus a manual look in the platform's built-in Browser preview. No programmatic browser automation unless the organizers confirmed it; Computer Use (OS-level GUI automation) is forbidden by the contest rules.
    - Library / SDK: a script that imports and exercises the public API - transcript.
    - Data-shaped work (migrations, configs, generated files): the resulting artifact itself, diffed or dumped.
 3. **Cover at least**: the happy path the goal names, the riskiest edge (empty, boundary, malformed, or concurrent input), and one regression on adjacent behavior the change could have broken. Add a row for every stated success criterion.

@@ -11,7 +11,7 @@ Use GPT-5.x style: outcome-first, evidence-bound, atomic decisions, no nested br
 
 ## Goal
 Deliver every goal in `.omo/ulw-loop/goals.json` end-to-end.
-Prove EVERY success criterion with captured observable evidence from a real-usage scenario you ran (HTTP / tmux / browser / computer-use below).
+Prove EVERY success criterion with captured observable evidence from a real-usage scenario you ran (HTTP / tmux / Browser preview below).
 TESTS ALONE NEVER PROVE DONE. A green test suite is supporting evidence, not completion proof.
 Audit each pass, fail, block, steering change, and checkpoint in `.omo/ulw-loop/<session-id>/ledger.jsonl`.
 
@@ -20,8 +20,8 @@ Run each criterion's real-surface proof yourself through the channel that faithf
 
 1. **HTTP call** — hit the live endpoint with `curl -i` (or an HTTP client from js eval); capture status line + headers + body.
 2. **Terminal / TUI** - prove it through the xterm.js web terminal; tmux `send-keys` is fine for a boot smoke, but NEVER `tmux capture-pane` for color/layout/CJK evidence (it degrades truecolor).
-3. **Browser use** — in Codex, prefer `browser:control-in-app-browser`. Otherwise omowright from js eval (staged in the `browser` skill): the owned engine (`connectPipe` on a task-owned profile, `connectCloakProfile` for bot-scored targets) for unauthenticated pages, the attached engine (`connectBrowserSkill()` in the user's signed-in browser) when the page needs their login — never a clone of, or a launch against, the live profile. Capture action log + screenshot path. Never downgrade a browser-facing criterion.
-4. **Computer use** — for desktop/GUI apps, drive the running app via OS automation (computer-use, AppleScript, xdotool, etc.); capture action log + screenshot.
+3. **Web UI** — `curl -i` against the server bound to 0.0.0.0, plus a manual look in the platform's built-in Browser preview. No programmatic browser automation unless the organizers confirmed it.
+4. **Computer Use is forbidden** by the contest rules — never automate the desktop or GUI apps.
 
 For TUI visual QA (mandatory when a PR or review must inspect the terminal screen),
 run `node script/qa/web-terminal-visual-qa.mjs --command "<cmd>" --input "{Enter}"

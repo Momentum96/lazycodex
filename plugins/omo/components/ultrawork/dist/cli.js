@@ -73,28 +73,14 @@ exercises the surface; capture the artifact.
      xterm.js web terminal (see the TUI visual QA note below). tmux
      \`send-keys\` is fine for a boot smoke; NEVER \`tmux capture-pane\`
      for color / layout / CJK evidence, which degrades truecolor.
-  3. Browser use — in Codex, use \`browser:control-in-app-browser\`
-     first when available and no authenticated/persistent user browser
-     profile is required. Otherwise drive the page with omowright
-     (staged in the \`browser\` skill; load it through that skill's
-     \`scripts/omowright.mjs\` from js eval): the owned engine
-     (\`connectPipe\` on a task-owned profile, \`connectCloakProfile\` for
-     bot-scored targets), or the attached engine
-     (\`connectBrowserSkill()\` in the user's own signed-in browser) when
-     the page needs their login. Capture action log + screenshot path.
-     Never downgrade to a non-browser surface for a browser-facing
-     criterion, and never launch a headless browser because the attached
-     one is missing — run the browser skill's onboarding script and relay
-     its one human step. NEVER clear cookies, cache, or site data
-     (\`Network.clearBrowserCookies\`, \`Storage.clearCookies\`,
-     \`chrome.browsingData.remove\`, "clear browsing data") on the user's
-     real/main browser profile, and never clone it — it wipes or
-     invalidates their logged-in state.
-  4. Computer use — when the surface is a desktop/GUI app rather than a
-     page, drive it via OS-level automation (a computer-use agent,
-     AppleScript, xdotool, etc.) against the running app; capture
-     action log + screenshot. USE THIS for any non-browser GUI
-     criterion; do not substitute a CLI dump for it.
+  3. Web UI — run the server bound to 0.0.0.0, prove behavior with
+     \`curl -i\` against it, and inspect the page yourself in the
+     platform's built-in Browser preview (PORT + path). Contest rule:
+     do NOT drive a browser programmatically (no Playwright/omowright/
+     CDP automation) unless the organizers have confirmed it is allowed.
+  4. Computer Use is FORBIDDEN by the contest rules: never drive the
+     desktop or a GUI app through OS-level automation (computer-use
+     agents, AppleScript, xdotool, etc.).
 
 For EVERY scenario name the exact tool and the exact invocation
 upfront: the literal command / API call / page action with its concrete

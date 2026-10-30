@@ -1,7 +1,7 @@
 {
 	"name": "omo",
 	"version": "5.1.51",
-	"description": "One Codex plugin namespace for Yeongyu's local Codex components.",
+	"description": "Contest-safe fork of the LazyCodex omo Codex plugin (no telemetry, no auto-update, gpt-6.1-sol only).",
 	"author": {
 		"name": "Yeongyu Kim",
 		"email": "yeongyu@users.noreply.github.com",
@@ -21,19 +21,15 @@
 	"skills": "./skills/",
 	"hooks": [
 		"./hooks/session-start-loading-project-rules.json",
-		"./hooks/session-start-recording-session-telemetry.json",
-		"./hooks/session-start-checking-auto-update.json",
 		"./hooks/session-start-checking-bootstrap-provisioning.json",
 		"./hooks/user-prompt-submit-loading-project-rules.json",
 		"./hooks/user-prompt-submit-checking-ultrawork-trigger.json",
 		"./hooks/user-prompt-submit-checking-ulw-loop-steering.json",
 		"./hooks/pre-tool-use-recommending-git-bash-mcp.json",
-		"./hooks/pre-tool-use-enforcing-unlimited-goal-budget.json",
 		"./hooks/pre-tool-use-guarding-ulw-loop-spawns.json",
 		"./hooks/post-tool-use-checking-comments.json",
 		"./hooks/post-tool-use-checking-lsp-diagnostics.json",
 		"./hooks/post-tool-use-matching-project-rules.json",
-		"./hooks/post-tool-use-checking-thread-title-hygiene.json",
 		"./hooks/post-tool-use-recording-spawn-admission.json",
 		"./hooks/post-compact-resetting-git-bash-mcp-reminder.json",
 		"./hooks/post-compact-resetting-project-rule-cache.json",
@@ -46,7 +42,7 @@
 	"interface": {
 		"displayName": "OMO",
 		"shortDescription": "Unified local Codex components",
-		"longDescription": "OMO exposes local Codex Rules, Comment Checker, Git Bash, LSP, Ultrawork, ulw-loop, ulw-execute continuation, and telemetry components as one plugin namespace while keeping each component isolated under components/ for maintenance.",
+		"longDescription": "OMO exposes local Codex Rules, Comment Checker, Git Bash, LSP, Ultrawork, ulw-loop and ulw-execute continuation components as one plugin namespace. This fork removes telemetry, auto-update, browser automation and GitHub-reporting skills, and pins every bundled role to gpt-6.1-sol.",
 		"developerName": "Yeongyu Kim",
 		"category": "Developer Tools",
 		"capabilities": [

@@ -3,24 +3,33 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const FALLBACK_CATALOG = {
-	version: "fallback.gpt-6-astra-600k-high",
+	version: "fallback.gpt-6.1-sol-500k-high",
 	current: {
-		model: "gpt-6-astra",
-		model_context_window: 600_000,
+		model: "gpt-6.1-sol",
+		model_context_window: 500_000,
 		model_reasoning_effort: "high",
 		plan_mode_reasoning_effort: "xhigh",
 	},
 	roles: {
 		default: {
-			model: "gpt-6-astra",
-			model_context_window: 600_000,
+			model: "gpt-6.1-sol",
+			model_context_window: 500_000,
 			model_reasoning_effort: "high",
 			plan_mode_reasoning_effort: "xhigh",
 		},
-		verifier: { model: "gpt-6-astra", model_reasoning_effort: "high" },
-		worker: { model: "gpt-6-astra", model_reasoning_effort: "high" },
+		verifier: { model: "gpt-6.1-sol", model_reasoning_effort: "high" },
+		worker: { model: "gpt-6.1-sol", model_reasoning_effort: "high" },
 	},
 	managedProfiles: [
+		{
+			version: "upstream.gpt-6-astra-600k-high",
+			match: {
+				model: "gpt-6-astra",
+				model_context_window: 600_000,
+				model_reasoning_effort: "high",
+				plan_mode_reasoning_effort: "xhigh",
+			},
+		},
 		{
 			version: "legacy.gpt-5.5-400k-reviewer-high",
 			match: {

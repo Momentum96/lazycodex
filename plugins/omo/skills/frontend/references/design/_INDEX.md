@@ -64,7 +64,6 @@ Beyond the 12-file Layer A library, the design ruleset carries project-original 
 | `grounding.md` | Guideline source read in full, persona and journey principles, ideal state, and the gap ledger in `DESIGN.md` section 9. | A new screen or flow, a redesign, or design-system creation or rework, before the brief. |
 | `lazyweb.md` | Curl-only real-product screen research for design direction. | Greenfield design research lanes. |
 | `stylegallery.md` | Curl-only lookup of named spatial pattern contracts: primary problem, constraints, scroll ownership, anti-patterns. | A concrete spatial problem needs a documented pattern, alongside `layout-skill.md` mechanics. |
-| `clone-from-url.md` | Runtime extraction workflow (browser + `getComputedStyle`) for cloning a named site. | A live site or URL is the visual reference. |
 | `component-catalogs.md` | Tone-to-catalog routing, an exploration procedure, and licence and terms gates for the component and motion catalogs beyond beui.dev and react-bits; charts. | The brief's tone or surface falls outside both anchors (AI-agent UI, charts, landing sections, brutalist or Tailwind-only builds), or an anchor has no nearest pattern. |
 
 ---
