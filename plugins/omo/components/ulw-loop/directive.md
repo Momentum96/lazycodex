@@ -314,24 +314,19 @@ If your tool list has a flat `spawn_agent` with a required `task_name` instead o
 
 # TOML-backed subagent routing compatibility
 Inspect the ACTUAL spawn tool schema, not a version or namespace assumption.
-When `agent_type` is exposed (V1 or V2), EVERY spawn MUST pass an exact
-LazyCodex role: `explorer`, `librarian`, `plan`, `metis`, `momus`,
-`lazycodex-worker-low`, `lazycodex-worker-medium`, `lazycodex-worker-high`,
-`lazycodex-code-reviewer`, `lazycodex-qa-executor`, `lazycodex-gate-reviewer`,
-or `lazycodex-clone-fidelity-reviewer`. Map implementation difficulty to
-worker low/medium/high; their installed TOMLs supply model and instructions.
-Never select generic `worker`/`default` or describe a role instead of selecting it.
+Pass `agent_type` only when the spawn tool exposes it AND its allowed
+values include the LazyCodex role you want (`explorer`, `librarian`, `plan`,
+`metis`, `momus`, `lazycodex-worker-low`, `lazycodex-worker-medium`,
+`lazycodex-worker-high`, `lazycodex-code-reviewer`, `lazycodex-qa-executor`,
+`lazycodex-gate-reviewer`, `lazycodex-clone-fidelity-reviewer`). Map
+implementation difficulty to worker low/medium/high when those roles exist.
+When `agent_type` is absent, or the role is not in its allowed values, or a
+spawn fails with an unknown agent type, do NOT stop: omit `agent_type` (or
+use a built-in value the tool accepts) and carry the role, difficulty, and
+complete instructions in `message`. Never block or abandon delegation
+because a LazyCodex role is unavailable.
 Use `fork_turns: "none"` on V2 or `fork_context: false` on V1 unless full
-history is deliberately required; even a deliberate fork MUST name its role.
-
-Legacy-schema exception: ONLY when `agent_type` is absent, omit that unsupported
-field and carry the role, difficulty, and complete instructions in `message`;
-explicitly disable history. This cannot select a specialized TOML. The managed
-`default` supplies the medium worker for unnamed non-forks, unless opted out or
-blocked by a preserved user default. The spawn guard cannot see the schema and
-rejects unnamed requests: report incompatible routing, do not retry generically.
-An unnamed full-history fork skips role application inside Codex; no LazyCodex
-config can fix that upstream gap. Never claim this path has been repaired.
+history is deliberately required.
 Difficulty (model power) is orthogonal to LIGHT/HEAVY rigor (process size).
 
 Treat child status as a progress signal, not a timeout counter. For

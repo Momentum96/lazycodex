@@ -51,6 +51,7 @@
 | Computer Use | 스킬과 지시문에 있던 computer-use(OS 수준 GUI 자동화) 사용 지시를 "대회 규정상 금지"로 바꿨습니다. |
 | 외부 전송 | GitHub 이슈·PR을 만드는 `lcx-report-bug`, `lcx-contribute-bug-fix`를 제거했습니다. |
 | 기타 제거 | `lcx-doctor`(Astra 기준 점검과 Codex 업그레이드 안내), `teammode`, `coding-agent-sessions` 스킬, 무제한 goal 예산 강제 훅을 제거했습니다. |
+| 서브에이전트 | upstream의 생성 가드는 `agent_type`이 없거나 LazyCodex 전용 역할이 아니면 서브에이전트 생성을 전부 거부합니다. 대회 환경처럼 `agent_type`이 노출되지 않거나 역할 TOML이 로드되지 않으면 서브에이전트를 하나도 쓸 수 없어서, 가드가 역할 때문에 거부하지 않도록 바꿨습니다(생성 개수 제한 등 다른 가드는 유지). ultrawork 지시문도 'agent_type이 없으면 생략하고 역할을 message에 적는다'로 바꿨습니다. |
 | 추가 스킬 | [Nutlope/hallmark](https://github.com/Nutlope/hallmark) 디자인 스킬(MIT)을 `skills/hallmark`에 포함했습니다. 외부 AI 모델 금지 규정 때문에 Together AI 이미지 생성 스크립트(`imagegen.mjs`)는 뺐고, 브라우저 렌더 검사는 Chrome이 없으면 정적 검사만 돌도록 안내를 넣었습니다. `$hallmark <프롬프트>`로 부릅니다. |
 | 저장소 정리 | 랜딩 사이트(`packages/web`), 스크린샷·evidence(`.omo`), GitHub workflow, npm 설치기(`bin`, `package.json`), `src` 서브모듈을 제거했습니다. 플러그인은 번들된 `dist`로 동작하므로 서브모듈이 필요 없습니다. |
 

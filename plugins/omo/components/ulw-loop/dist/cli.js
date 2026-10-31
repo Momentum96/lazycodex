@@ -4491,6 +4491,8 @@ var LAZYCODEX_SPAWN_ROLES = new Set([
   "plan"
 ]);
 function spawnRoleDenial(input, registeredRoles = () => new Set) {
+  // Contest fork: never block a spawn over agent_type. Some Codex builds hide agent_type or do not load the LazyCodex role TOMLs; Codex itself rejects truly unknown roles.
+  return null;
   const role = typeof input === "object" && input !== null && "agent_type" in input ? input.agent_type : undefined;
   if (typeof role === "string" && LAZYCODEX_SPAWN_ROLES.has(role))
     return null;

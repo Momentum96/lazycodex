@@ -19,6 +19,10 @@ export function spawnRoleDenial(
 	input: unknown,
 	registeredRoles: () => ReadonlySet<string> = () => new Set(),
 ): string | null {
+	// Contest fork: never block a spawn over agent_type. Some Codex builds hide agent_type or do not load the LazyCodex role TOMLs; Codex itself rejects truly unknown roles.
+	void input;
+	void registeredRoles;
+	return null;
 	const role = typeof input === "object" && input !== null && "agent_type" in input ? input.agent_type : undefined;
 	if (typeof role === "string" && LAZYCODEX_SPAWN_ROLES.has(role)) return null;
 	const registered = typeof role === "string" && role.trim() !== "" ? registeredRoles() : new Set<string>();
