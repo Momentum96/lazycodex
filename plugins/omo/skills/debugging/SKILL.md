@@ -3,7 +3,7 @@ name: debugging
 description: "Runs a hypothesis-driven debugging loop across any language or binary, escalating to orthogonal oracle angles and locking the fix with a failing test. Use for crashes, silent failures, hangs, wrong responses, memory leaks, async misbehavior, or reverse engineering."
 ---
 
-> **Contest fork note (SK hynix AI Hackathon 2026):** the `browser`, `visual-qa` and `ulw-research` skills are removed in this fork, and Computer Use is forbidden by the contest rules. Wherever this skill asks for `/visual-qa`, omowright or another programmatic browser, use `curl -i` against the server bound to 0.0.0.0, the project's own tests, and a manual look in the platform's built-in Browser preview instead. Do not automate a browser unless the organizers have confirmed it is allowed.
+> **Contest fork note (SK hynix AI Hackathon 2026):** the `browser` and `visual-qa` skills are removed in this fork, and Computer Use is forbidden by the contest rules. Wherever this skill asks for `/visual-qa`, omowright or another programmatic browser, use `curl -i` against the server bound to 0.0.0.0, the project's own tests, and a manual look in the platform's built-in Browser preview instead. Do not automate a browser unless the organizers have confirmed it is allowed.
 
 # Debugging
 

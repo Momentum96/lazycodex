@@ -3,7 +3,7 @@ name: frontend
 description: "Builds, styles, and polishes anything drawn with HTML, CSS, or SVG: web UI, pages, components, HTML reports rendered to PDF or print, figures, PNG/SVG diagrams, slides, and images for Notion or Slack. Use for any styling, layout, animation, or visual-quality task, or when asked to make something look or feel a certain way."
 ---
 
-> **Contest fork note (SK hynix AI Hackathon 2026):** the `browser`, `visual-qa` and `ulw-research` skills are removed in this fork, and Computer Use is forbidden by the contest rules. Wherever this skill asks for `/visual-qa`, omowright or another programmatic browser, use `curl -i` against the server bound to 0.0.0.0, the project's own tests, and a manual look in the platform's built-in Browser preview instead. Do not automate a browser unless the organizers have confirmed it is allowed.
+> **Contest fork note (SK hynix AI Hackathon 2026):** the `browser` and `visual-qa` skills are removed in this fork, and Computer Use is forbidden by the contest rules. Wherever this skill asks for `/visual-qa`, omowright or another programmatic browser, use `curl -i` against the server bound to 0.0.0.0, the project's own tests, and a manual look in the platform's built-in Browser preview instead. Do not automate a browser unless the organizers have confirmed it is allowed.
 
 # Frontend
 

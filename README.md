@@ -47,14 +47,14 @@
 | 모델 | 기본 모델과 번들된 에이전트 역할 12개를 모두 `gpt-6.1-sol`(6.1 Sol)로 고정했습니다. upstream 기본값은 대회에서 제한된 `gpt-6-astra`입니다. 기존 Astra 설정은 관리 프로필로 인식되어 Sol로 교체됩니다. |
 | 텔레메트리 | PostHog로 세션 정보를 보내는 `telemetry` 컴포넌트와 훅을 제거했습니다. |
 | 자동 업데이트 | 세션 시작 때 `npx lazycodex-ai@latest install`을 실행하던 자동 업데이트 훅과 스크립트를 제거했습니다. Codex 버전 업데이트 금지 공지와 부딪히고, 포크 수정 사항을 upstream으로 덮어쓰기 때문입니다. |
-| 브라우저 자동화 | `browser`(omowright), `ultimate-browsing`(WAF 우회·스텔스·쿠키 추출), `visual-qa`, `ulw-research` 스킬을 제거했습니다. 남은 스킬과 지시문의 검증 채널도 "curl + 플랫폼 내장 Browser 미리보기 수동 확인"으로 바꿨습니다. |
+| 브라우저 자동화 | `browser`(omowright), `ultimate-browsing`(WAF 우회·스텔스·쿠키 추출), `visual-qa` 스킬을 제거했습니다. `ulw-research`는 남겼고, 출처를 브라우저 대신 웹 검색·fetch와 context7·grep_app으로 읽도록 바꿨습니다(이미지 생성, 출처 스크린샷, 브라우저 렌더 검사 제외). 남은 스킬과 지시문의 검증 채널도 "curl + 플랫폼 내장 Browser 미리보기 수동 확인"으로 바꿨습니다. |
 | Computer Use | 스킬과 지시문에 있던 computer-use(OS 수준 GUI 자동화) 사용 지시를 "대회 규정상 금지"로 바꿨습니다. |
 | 외부 전송 | GitHub 이슈·PR을 만드는 `lcx-report-bug`, `lcx-contribute-bug-fix`를 제거했습니다. |
 | 기타 제거 | `lcx-doctor`(Astra 기준 점검과 Codex 업그레이드 안내), `teammode`, `coding-agent-sessions` 스킬, 무제한 goal 예산 강제 훅을 제거했습니다. |
 | 추가 스킬 | [Nutlope/hallmark](https://github.com/Nutlope/hallmark) 디자인 스킬(MIT)을 `skills/hallmark`에 포함했습니다. 외부 AI 모델 금지 규정 때문에 Together AI 이미지 생성 스크립트(`imagegen.mjs`)는 뺐고, 브라우저 렌더 검사는 Chrome이 없으면 정적 검사만 돌도록 안내를 넣었습니다. `$hallmark <프롬프트>`로 부릅니다. |
 | 저장소 정리 | 랜딩 사이트(`packages/web`), 스크린샷·evidence(`.omo`), GitHub workflow, npm 설치기(`bin`, `package.json`), `src` 서브모듈을 제거했습니다. 플러그인은 번들된 `dist`로 동작하므로 서브모듈이 필요 없습니다. |
 
-남아 있는 것: `hallmark`(추가), `ast-grep`, `comment-checker`, `debugging`, `frontend`, `git-master`, `init-deep`, `lsp`, `lsp-setup`, `programming`, `refactor`, `remove-ai-slops`, `review-work`, `rules`, `ultrawork`, `ulw-execute`, `ulw-loop`, `ulw-plan`, `data-scientist` 스킬과 rules·LSP·comment-checker·git-bash·ultrawork·ulw-loop 훅, 원격 MCP `context7`·`grep_app`, 로컬 MCP `git_bash`·`lsp`.
+남아 있는 것: `hallmark`(추가), `ast-grep`, `comment-checker`, `debugging`, `frontend`, `git-master`, `init-deep`, `lsp`, `lsp-setup`, `programming`, `refactor`, `remove-ai-slops`, `review-work`, `rules`, `ultrawork`, `ulw-execute`, `ulw-loop`, `ulw-plan`, `ulw-research`, `data-scientist` 스킬과 rules·LSP·comment-checker·git-bash·ultrawork·ulw-loop 훅, 원격 MCP `context7`·`grep_app`, 로컬 MCP `git_bash`·`lsp`.
 
 ## 설치
 
