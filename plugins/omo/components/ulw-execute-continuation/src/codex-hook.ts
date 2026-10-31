@@ -70,7 +70,8 @@ const CONTEXT_PRESSURE_MARKERS = [
 	"long threads and multiple compactions",
 ] as const;
 
-function transcriptHasContextPressureMarker(transcriptPath: string, fs: ReadonlyFileSystem): boolean {
+function transcriptHasContextPressureMarker(transcriptPath: string | null, fs: ReadonlyFileSystem): boolean {
+	if (transcriptPath === null) return false;
 	try {
 		const transcript = fs.readFileSync(transcriptPath, "utf8").toLowerCase();
 		return CONTEXT_PRESSURE_MARKERS.some((marker) => transcript.includes(marker));
@@ -86,7 +87,7 @@ function isStopInput(value: unknown): value is StopInput {
 		isStopHookEventName(value["hook_event_name"]) &&
 		typeof value["session_id"] === "string" &&
 		typeof value["turn_id"] === "string" &&
-		typeof value["transcript_path"] === "string" &&
+		(value["transcript_path"] === null || typeof value["transcript_path"] === "string") &&
 		typeof value["cwd"] === "string" &&
 		typeof value["model"] === "string" &&
 		typeof value["permission_mode"] === "string" &&

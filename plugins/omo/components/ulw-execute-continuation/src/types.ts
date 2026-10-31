@@ -5,7 +5,7 @@ export type StopInput = {
 	readonly hook_event_name: StopHookEventName;
 	readonly session_id: string;
 	readonly turn_id: string;
-	readonly transcript_path: string;
+	readonly transcript_path: string | null;
 	readonly cwd: string;
 	readonly model: string;
 	readonly permission_mode: string;

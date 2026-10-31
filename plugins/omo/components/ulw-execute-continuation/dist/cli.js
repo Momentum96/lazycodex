@@ -375,6 +375,8 @@ var CONTEXT_PRESSURE_MARKERS = [
   "long threads and multiple compactions"
 ];
 function transcriptHasContextPressureMarker(transcriptPath, fs) {
+  if (transcriptPath === null)
+    return false;
   try {
     const transcript = fs.readFileSync(transcriptPath, "utf8").toLowerCase();
     return CONTEXT_PRESSURE_MARKERS.some((marker) => transcript.includes(marker));
@@ -385,7 +387,7 @@ function transcriptHasContextPressureMarker(transcriptPath, fs) {
   }
 }
 function isStopInput(value) {
-  return isRecord2(value) && isStopHookEventName(value["hook_event_name"]) && typeof value["session_id"] === "string" && typeof value["turn_id"] === "string" && typeof value["transcript_path"] === "string" && typeof value["cwd"] === "string" && typeof value["model"] === "string" && typeof value["permission_mode"] === "string" && typeof value["stop_hook_active"] === "boolean" && optionalString(value["last_assistant_message"]);
+  return isRecord2(value) && isStopHookEventName(value["hook_event_name"]) && typeof value["session_id"] === "string" && typeof value["turn_id"] === "string" && (value["transcript_path"] === null || typeof value["transcript_path"] === "string") && typeof value["cwd"] === "string" && typeof value["model"] === "string" && typeof value["permission_mode"] === "string" && typeof value["stop_hook_active"] === "boolean" && optionalString(value["last_assistant_message"]);
 }
 function isStopHookEventName(value) {
   return value === "Stop";

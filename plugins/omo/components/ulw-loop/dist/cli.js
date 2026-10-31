@@ -4889,6 +4889,8 @@ function boulderContinuationWillFire(cwd, sessionId) {
   }
 }
 function transcriptShowsContextPressure(transcriptPath) {
+  if (transcriptPath === null)
+    return false;
   try {
     const transcript = readFileSync8(transcriptPath, "utf8").toLowerCase();
     return CONTEXT_PRESSURE_MARKERS2.some((marker) => transcript.includes(marker));
@@ -4920,7 +4922,7 @@ function parseStopPayload(value) {
     return null;
   const record = value;
   const optionalMessage = record["last_assistant_message"];
-  const valid = record["hook_event_name"] === "Stop" && typeof record["session_id"] === "string" && typeof record["turn_id"] === "string" && typeof record["transcript_path"] === "string" && typeof record["cwd"] === "string" && typeof record["model"] === "string" && typeof record["permission_mode"] === "string" && typeof record["stop_hook_active"] === "boolean" && (optionalMessage === undefined || typeof optionalMessage === "string");
+  const valid = record["hook_event_name"] === "Stop" && typeof record["session_id"] === "string" && typeof record["turn_id"] === "string" && (record["transcript_path"] === null || typeof record["transcript_path"] === "string") && typeof record["cwd"] === "string" && typeof record["model"] === "string" && typeof record["permission_mode"] === "string" && typeof record["stop_hook_active"] === "boolean" && (optionalMessage === undefined || typeof optionalMessage === "string");
   if (!valid)
     return null;
   return {

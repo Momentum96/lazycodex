@@ -28,7 +28,7 @@ const CONTEXT_PRESSURE_MARKERS = [
 interface StopPayload {
 	readonly session_id: string;
 	readonly cwd: string;
-	readonly transcript_path: string;
+	readonly transcript_path: string | null;
 	readonly stop_hook_active: boolean;
 }
 
@@ -163,7 +163,8 @@ function boulderContinuationWillFire(cwd: string, sessionId: string): boolean {
 	}
 }
 
-function transcriptShowsContextPressure(transcriptPath: string): boolean {
+function transcriptShowsContextPressure(transcriptPath: string | null): boolean {
+	if (transcriptPath === null) return false;
 	try {
 		const transcript = readFileSync(transcriptPath, "utf8").toLowerCase();
 		return CONTEXT_PRESSURE_MARKERS.some((marker) => transcript.includes(marker));
@@ -204,7 +205,7 @@ function parseStopPayload(value: unknown): StopPayload | null {
 		record["hook_event_name"] === "Stop" &&
 		typeof record["session_id"] === "string" &&
 		typeof record["turn_id"] === "string" &&
-		typeof record["transcript_path"] === "string" &&
+		(record["transcript_path"] === null || typeof record["transcript_path"] === "string") &&
 		typeof record["cwd"] === "string" &&
 		typeof record["model"] === "string" &&
 		typeof record["permission_mode"] === "string" &&
