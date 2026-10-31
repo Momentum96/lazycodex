@@ -11039,7 +11039,7 @@ function posixRuntimeWrapper(binName, cliPath, codexHome, binDir, nodeCliPath) {
     "  exit 127",
     "fi",
     `if [ ! -f "${escapedCliPath}" ]; then`,
-    `  echo "${binName}: runtime target missing at ${escapedCliPath}; reinstall with: npx --yes lazycodex-ai@latest install --no-tui" >&2`,
+    `  echo "${binName}: runtime target missing at ${escapedCliPath}; reinstall with: codex plugin add omo@sisyphuslabs" >&2`,
     "  exit 1",
     "fi",
     `exec "$BUN_BINARY" "${escapedCliPath}" "$@"`,
@@ -11076,7 +11076,7 @@ function windowsRuntimeWrapper(binName, cliPath, codexHome, binDir, nodeCliPath)
     "  exit /b 127",
     ")",
     `if not exist "${cliPath}" (`,
-    `  echo ${binName}: runtime target missing at ${cliPath}; reinstall with: npx --yes lazycodex-ai@latest install --no-tui 1>&2`,
+    `  echo ${binName}: runtime target missing at ${cliPath}; reinstall with: codex plugin add omo@sisyphuslabs 1>&2`,
     "  exit /b 1",
     ")",
     `"%BUN_BINARY%" "${cliPath}" %*`,
@@ -12336,7 +12336,7 @@ function toCodexResolution(resolution) {
       "Git Bash is required for native Windows Codex profile installs.",
       "Install it with: winget install --id Git.Git -e --source winget",
       `For a custom install, set ${GIT_BASH_ENV_KEY2}=C:\\path\\to\\bash.exe`,
-      "Then rerun `npx lazycodex-ai install`."
+      "Then rerun the bootstrap worker (node <PLUGIN_ROOT>/components/bootstrap/dist/cli.js worker --once)."
     ].join(`
 `)
   };
@@ -12513,7 +12513,7 @@ async function linkRuntimeWrapperStep(options, binDir, degraded) {
       return;
     degraded.push({
       component: "omo-agent-toolkit",
-      hint: "use npx lazycodex-ai for the omo-agent-toolkit CLI",
+      hint: "reinstall the plugin from the fork marketplace (codex plugin add omo@sisyphuslabs); the payload must ship dist/cli",
       reason: "marketplace payload has no dist/cli"
     });
     await appendBootstrapLog(options.pluginData, options.now ?? Date.now(), "omo-agent-toolkit-degraded", {
@@ -12562,7 +12562,7 @@ function errorMessage(error) {
 }
 
 // components/bootstrap/src/worker.ts
-var BOOTSTRAP_DOCTOR_HINT = "npx lazycodex-ai doctor";
+var BOOTSTRAP_DOCTOR_HINT = "rerun the bootstrap worker: node <PLUGIN_ROOT>/components/bootstrap/dist/cli.js worker --once (never run npx lazycodex-ai in the contest fork)";
 function parseWorkerFlags(argv) {
   let codexHome;
   let manifestDir;

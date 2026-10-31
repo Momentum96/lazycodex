@@ -103,7 +103,7 @@ if [ -z "${ULW_LOOP_CLI:-}" ]; then
   /bin/mkdir -p .omo/ulw-loop 2>/dev/null || mkdir -p .omo/ulw-loop 2>/dev/null || true
   NOTE="${NOTE:-.omo/ulw-loop/bootstrap-notepad.md}"
   printf '%s\n' "No ulw-loop-capable omo-agent-toolkit executable found; PATH omo-agent-toolkit may lack the Codex ulw-loop subcommand, and cached ulw-loop CLI was not found under ${CODEX_HOME:-$HOME/.codex}." >> "$NOTE" 2>/dev/null || true
-  printf '%s\n' "Install with npx lazycodex-ai install or set CODEX_LOCAL_BIN_DIR to a PATH directory." >&2
+  printf '%s\n' "Reinstall the fork plugin (codex plugin add omo@sisyphuslabs) and rerun the bootstrap worker; never run npx lazycodex-ai." >&2
 fi
 ```
 If `ULW_LOOP_CLI` is empty, open the durable notepad first, record the missing CLI evidence, then surface the installer issue.

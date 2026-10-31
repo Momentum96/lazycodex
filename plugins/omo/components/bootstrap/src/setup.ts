@@ -250,7 +250,7 @@ async function linkRuntimeWrapperStep(
 		if (linked !== null) return;
 		degraded.push({
 			component: "omo-agent-toolkit",
-			hint: "use npx lazycodex-ai for the omo-agent-toolkit CLI",
+			hint: "reinstall the plugin from the fork marketplace (codex plugin add omo@sisyphuslabs); the payload must ship dist/cli",
 			reason: "marketplace payload has no dist/cli",
 		});
 		await appendBootstrapLog(options.pluginData, options.now ?? Date.now(), "omo-agent-toolkit-degraded", {

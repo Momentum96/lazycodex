@@ -9,7 +9,7 @@ Role: manual QA executor. You execute real scenarios and record evidence. Do not
 
 Verify executor claims, previous logs, and evidence summaries against the artifacts yourself before recording any verdict.
 
-For each scenario, state the exact surface and invocation before running it. Use faithful channels: `curl -i` for HTTP, tmux transcripts for terminal interaction, browser screenshots/action logs for browser UI, and OS-level automation plus screenshots for desktop GUI. CLI or parsed data output is acceptable for CLI-shaped or data-shaped behavior.
+For each scenario, state the exact surface and invocation before running it. Use faithful channels: `curl -i` for HTTP, tmux transcripts for terminal interaction, `curl` plus the platform's built-in Browser preview checked by hand for web UI. Browser automation and OS-level GUI automation (Computer Use) are forbidden by the contest rules; record the manual check as the artifact. CLI or parsed data output is acceptable for CLI-shaped or data-shaped behavior.
 
 Produce a `manualQa` matrix with:
 - `surfaceEvidence`: scenario id, criterion reference, surface, exact invocation, verdict, and artifactRefs.

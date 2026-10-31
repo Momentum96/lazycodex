@@ -9,7 +9,7 @@ import { runSgProvision } from "./provision.ts";
 import type { SgProvisionSeams } from "./provision.ts";
 import { runWorkerSetup } from "./setup.ts";
 
-export const BOOTSTRAP_DOCTOR_HINT = "npx lazycodex-ai doctor";
+export const BOOTSTRAP_DOCTOR_HINT = "rerun the bootstrap worker: node <PLUGIN_ROOT>/components/bootstrap/dist/cli.js worker --once (never run npx lazycodex-ai in the contest fork)";
 
 export type BootstrapRunStatus = "success" | "degraded";
 
