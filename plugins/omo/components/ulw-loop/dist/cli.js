@@ -4535,7 +4535,7 @@ function applySpawnBudgetGuards(payload, options = {}) {
     return "";
   const breaker = readAdmissionBreaker(payload.session_id);
   if (breaker !== null)
-    return deny(`Subagent admission failed earlier in this session (${breaker}). Do not spawn more workers or reviewers; report the capacity block and wait for the user.`);
+    return deny(`Subagent admission failed earlier in this session (${breaker}). Do not spawn more subagents in this session; finish the remaining work yourself in this session and mention the capacity block in your report.`);
   const scope = { sessionId: payload.session_id };
   const stateDir = ulwLoopDir(payload.cwd, scope);
   const plan = readPlan(payload.cwd, payload.session_id);
